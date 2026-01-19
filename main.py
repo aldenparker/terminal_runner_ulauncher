@@ -1,6 +1,5 @@
 import json
 import subprocess
-#import logging
 from ulauncher.api.client.Extension import Extension
 from ulauncher.api.client.EventListener import EventListener
 from ulauncher.api.shared.event import KeywordQueryEvent, ItemEnterEvent
@@ -9,8 +8,6 @@ from ulauncher.api.shared.action.RenderResultListAction import RenderResultListA
 from ulauncher.api.shared.action.ExtensionCustomAction import ExtensionCustomAction
 from ulauncher.api.shared.action.HideWindowAction import HideWindowAction
 
-
-#logger = logging.getLogger(__name__)
 
 class RunTerminalCommands(Extension):
 
@@ -26,7 +23,7 @@ class KeywordQueryEventListener(EventListener):
         command = event.get_argument()
         return RenderResultListAction([ExtensionResultItem(icon='icon.png',
                                                                   name='Run',
-                                                                  description='The command you type will be runned',
+                                                                  description='The command you type will be run, no terminal window will pop up.',
                                                                   on_enter=ExtensionCustomAction(data=command))])
 
 
@@ -34,8 +31,7 @@ class ItemEnterEventListener(EventListener):
 
     def on_event(self, event, extension):
         command = event.get_data()
-        #logger.info(command)
-        subprocess.run(command,shell=True)
+        subprocess.run(command, shell=True)
         return HideWindowAction()
 
 
